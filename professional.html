@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Information</title>
+    <style>
+        body {
+            background-color:rgb(43, 171, 226);;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        .index {
+            position: fixed;
+            top: 200px;
+            left: 10px;
+            color: white;
+        }
+        .index ul {
+            list-style: none;
+            padding: 0;
+        }
+        .index li {
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color:rgb(43, 171, 226);;
+        }
+        .index li.active {
+            font-weight: bold;
+            background-color: yellow;
+            color: rgb(43, 171, 226);;
+        }
+        .box {
+            width: 60%;
+            margin-left: 20%;
+            padding: 20px;
+            margin-top: 50px;
+            background-color: whitesmoke;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: rgb(43, 171, 226);;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .bulb {
+            width: 50px;
+            height: 50px;
+            background: url('images/idea.png') no-repeat center center;
+            background-size: cover;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            animation: glow 1.5s infinite;
+            border-radius: 50%;
+        }
+        .hidden {
+            display: none;
+        }
+        .skill-buttons {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            max-width: 150px;
+            z-index: 1000;
+        }
+        .skill-buttons button {
+            padding: 5px 10px;
+            background-color: white;
+            color:rgb(43, 171, 226);;
+            border: 1px solid rgb(43, 171, 226);;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 5px;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px yellow;
+            }
+            50% {
+                box-shadow: 0 0 20px yellow;
+            }
+            100% {
+                box-shadow: 0 0 5px yellow;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="index">
+        <ul>
+            <li>1</li>
+            <li class="active">2</li>
+            <li>3</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h1>Professional Information</h1>
+        <form id="professionalForm">
+            <label for="Profession">Profession:</label>
+            <input type="text" id="job" name="job">
+
+            <label for="workExperience">Work Experience:</label>
+            <textarea id="workExperience" name="workExperience" rows="4"></textarea>
+
+            <label for="skills">Skills:</label>
+            <textarea id="skills" name="skills" rows="4"></textarea>
+
+            <label for="projects">Projects:</label>
+            <textarea id="projects" name="projects" rows="4"></textarea>
+
+            <label for="Achievements">Achievements:</label>
+            <textarea id="Achievements" name="Achievements" rows="4"></textarea>
+
+            <label for="Certifications">Certifications:</label>
+            <textarea id="Certifications" name="Certifications" rows="4"></textarea>
+
+            <button type="button" onclick="storeProfessionalInfo()">Next</button>
+        </form>
+    </div>
+    <div id="bulb" class="bulb hidden" onclick="toggleSkills()"></div>
+    <div id="skillButtons" class="skill-buttons hidden"></div>
+
+    <script>
+        const professionSkills = [
+            { profession: "Software Engineer", skills: ["JavaScript", "Python", "Java", "C++", "Git", "Agile Methodology"] },
+            { profession: "Data Scientist", skills: ["Python", "R", "SQL", "Machine Learning", "Statistics", "Data Visualization"] },
+            { profession: "Graphic Designer", skills: ["Adobe Photoshop", "Adobe Illustrator", "Sketch", "Creativity", "Typography", "Color Theory"] },
+            { profession: "Digital Marketer", skills: ["SEO", "Content Marketing", "Social Media", "Google Analytics", "PPC", "Email Marketing"] },
+            { profession: "Project Manager", skills: ["Project Planning", "Risk Management", "Agile Methodology", "Scrum", "Communication", "Leadership"] },
+            { profession: "UX/UI Designer", skills: ["User Research", "Wireframing", "Prototyping", "Adobe XD", "Figma", "Usability Testing"] },
+            { profession: "Network Engineer", skills: ["Networking Protocols", "Cisco", "Firewall Management", "Troubleshooting", "Linux", "Network Security"] },
+            { profession: "Accountant", skills: ["Financial Reporting", "Excel", "Taxation", "Auditing", "Budgeting", "Analytical Skills"] },
+            { profession: "Human Resources Manager", skills: ["Recruitment", "Employee Relations", "HR Software", "Conflict Resolution", "Organizational Development", "Compliance"] },
+            { profession: "Mechanical Engineer", skills: ["CAD Software", "Mechanical Design", "Thermodynamics", "Material Science", "Problem-Solving", "Manufacturing Processes"] }
+        ];
+
+        document.getElementById('job').addEventListener('input', function() {
+            const input = this.value.toLowerCase().replace(/\s+/g, '');
+            const foundProfession = professionSkills.find(profession =>
+                profession.profession.toLowerCase().replace(/\s+/g, '') === input
+            );
+
+            const bulb = document.getElementById('bulb');
+            if (foundProfession) {
+                bulb.classList.remove('hidden');
+                bulb.dataset.skills = foundProfession.skills.join(', ');
+            } else {
+                bulb.classList.add('hidden');
+            }
+        });
+
+        function toggleSkills() {
+            const skillButtons = document.getElementById('skillButtons');
+            if (skillButtons.classList.contains('hidden')) {
+                showSkills();
+            } else {
+                skillButtons.classList.add('hidden');
+                skillButtons.innerHTML = '';
+            }
+        }
+
+        function showSkills() {
+            const bulb = document.getElementById('bulb');
+            const skills = bulb.dataset.skills;
+            if (skills) {
+                const skillsArray = skills.split(', ');
+                const skillButtons = document.getElementById('skillButtons');
+                skillButtons.innerHTML = '';
+                skillsArray.forEach(skill => {
+                    const button = document.createElement('button');
+                    button.textContent = skill;
+                    button.onclick = () => addSkill(skill);
+                    skillButtons.appendChild(button);
+                });
+                skillButtons.classList.remove('hidden');
+            }
+        }
+
+        function addSkill(skill) {
+            const skillsTextarea = document.getElementById('skills');
+            const currentSkills = skillsTextarea.value.split(',').map(s => s.trim()).filter(s => s);
+            if (!currentSkills.includes(skill)) {
+                currentSkills.push(skill);
+                skillsTextarea.value = currentSkills.join(', ');
+            }
+        }
+
+        function storeProfessionalInfo() {
+            const job = document.getElementById('job').value;
+            const workExperience = document.getElementById('workExperience').value;
+            const skills = document.getElementById('skills').value;
+            const projects = document.getElementById('projects').value;
+            const Achievements = document.getElementById('Achievements').value;
+            const Certifications = document.getElementById('Certifications').value;
+            localStorage.setItem('job', job);
+            localStorage.setItem('workExperience', workExperience);
+            localStorage.setItem('skills', skills);
+            localStorage.setItem('projects', projects);
+            localStorage.setItem('Achievements', Achievements);
+            localStorage.setItem('Certifications', Certifications);
+            window.location.href = 'contact.html';
+        }
+    </script>
+</body>
+</html>

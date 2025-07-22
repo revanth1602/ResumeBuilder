@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Template - Resume Builder</title>
+    <link rel="stylesheet" href="templates.css">
+</head>
+<body>
+    <header>
+        <h1>Choose a Template</h1>
+    </header>
+    
+    <main class="template-gallery">
+        <div class="template">
+            <img src="images/template1.png" alt="Template 1">
+            <button class="preview-btn">Preview</button><br>
+            <button class="finalize" onclick="finalizeTemplate('form/template1.html')">Finalize</button>
+        </div>
+        <div class="template">
+            <img src="images/template2.png" alt="Template 2">
+            <button class="preview-btn">Preview</button><br>
+            <button class="finalize" onclick="finalizeTemplate('form/template2.html')">Finalize</button>
+        </div>
+        <div class="template">
+            <img src="images/template3.png" alt="Template 3">
+            <button class="preview-btn">Preview</button><br>
+            <button class="finalize" onclick="finalizeTemplate('form/template3.html')">Finalize</button>
+        </div>
+        <div class="template">
+            <img src="images/template4.png" alt="Template 4">
+            <button class="preview-btn">Preview</button><br>
+            <button class="finalize" onclick="finalizeTemplate('form/template4.html')">Finalize</button>
+        </div>
+        <div class="template">
+            <img src="https://i.ibb.co/GM2hysG/template-5.png" alt="Template 5">
+            <button class="preview-btn">Preview</button><br>
+            <button>Select Template</button>
+        </div>
+        <div class="template">
+            <img src="https://i.ibb.co/VjDNXH1/template-6.png" alt="Template 6">
+            <button class="preview-btn">Preview</button><br>
+            <button>Select Template</button>
+        </div>
+        <div class="template">
+            <img src="https://i.ibb.co/tbkC2LG/template-7.png" alt="Template 7">
+            <button class="preview-btn">Preview</button><br>
+            <button>Select Template</button>
+        </div>
+        <div class="template">
+            <img src="https://i.ibb.co/0sNSPqV/template-8.png" alt="Template 8">
+            <button class="preview-btn">Preview</button><br>
+            <button>Select Template</button>
+        </div>
+      <div class ="space">
+        
+      </div>
+    </main>
+    <div id="previewModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="previewImage">
+    </div>
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("previewModal");
+        var img = document.getElementById("previewImage");
+        var modalImg = document.getElementsByClassName("modal-content")[0];
+        var previewBtns = document.getElementsByClassName("preview-btn");
+        for (var i = 0; i < previewBtns.length; i++) {
+            previewBtns[i].onclick = function() {
+                modal.style.display = "block";
+                var imgSrc = this.previousElementSibling.src;
+                modalImg.src = imgSrc;
+            }}
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        function previewTemplate(imageUrl) {
+            sessionStorage.setItem('previewImage', imageUrl);
+            window.open('preview.html', '_blank');
+        }
+        function finalizeTemplate(formUrl) {
+            localStorage.setItem('finalizeForm', formUrl);
+            window.location.href = 'personal.html'; // Redirect to the contact page
+        }
+    </script>
+</body>
+</html>

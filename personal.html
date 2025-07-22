@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Information</title>
+    <style>
+        body {
+            background-color:rgb(43, 171, 226);
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .index {
+            position: fixed;
+            top: 200px;
+            left: 10px;
+            color: white;
+        }
+        .index ul {
+            list-style: none;
+            padding: 0;
+        }
+        .index li {
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color: blueviolet;
+        }
+        .index li.active {
+            font-weight: bold;
+            background-color: yellow;
+            color: rgb(43, 171, 226);
+        }
+        .box {
+            width: 60%;
+            margin-left: 20%;
+            padding: 20px;
+            margin-top: 50px;
+            background-color: whitesmoke;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: rgb(43, 171, 226);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="index">
+        <ul>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h1>Personal Information</h1>
+        <form id="personalForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="Profile">Objective:</label>
+            <textarea id="Profile" name="Profile" rows="4"></textarea>
+            <button type="button" onclick="generateRandomProfile()">Random</button> <!-- New Random Button -->
+
+            <label for="education">Education:</label>
+            <textarea id="education" name="education" rows="4"></textarea>
+
+            <button type="button" onclick="storePersonalInfo()">Next</button>
+        </form>
+    </div>
+
+    <script>
+        // Dataset of random paragraphs
+        const randomParagraphs = [
+            "Dynamic professional with a decade of experience in the tech industry, specializing in software development and project management.",
+            "Creative thinker and problem solver with a background in graphic design and a passion for innovative solutions.",
+            "Results-oriented marketing specialist with a proven track record in driving successful campaigns and increasing brand awareness.",
+            "Seasoned educator with a strong foundation in curriculum development and a commitment to fostering student growth.",
+            "Experienced financial analyst with expertise in data analysis, financial modeling, and strategic planning."
+        ];
+
+        function generateRandomProfile() {
+            const randomIndex = Math.floor(Math.random() * randomParagraphs.length);
+            const randomProfile = randomParagraphs[randomIndex];
+            document.getElementById('Profile').value = randomProfile;
+        }
+
+        function storePersonalInfo() {
+            const name = document.getElementById('name').value;
+            const Profile = document.getElementById('Profile').value;
+            const education = document.getElementById('education').value;
+            localStorage.setItem('name', name);
+            localStorage.setItem('Profile', Profile);
+            localStorage.setItem('education', education);
+            window.location.href = 'professional.html';
+        }
+    </script>
+</body>
+
+</html>
