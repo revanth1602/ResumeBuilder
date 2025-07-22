@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .form-container {
+            width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container div {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input,
+        .form-container textarea,
+        .form-container select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-container button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .a4-container {
+            width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        .top-section {
+            height: 150px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #000;
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+        .top-section div {
+            margin: 0;
+        }
+        .top-section .name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .column-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .heading {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color:darkgreen;
+        }
+        .rounded-border {
+            border: 1px solid #000;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .color-select {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+            z-index: 1;
+        }
+        .color-option {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .color-option:hover {
+            background-color: #f0f0f0;
+        }
+        .toggle-btn {
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .a4-container, .a4-container * {
+                visibility: visible;
+            }
+            .a4-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                border: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('name-section')">&#x2713;</span>
+                <label for="name">Name:</label>
+                <input type="text" id="name" oninput="updateResume()" placeholder="Enter your name">
+            </div>
+            
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('profile-section')">&#x2713;</span>
+                <label for="Profile">Summary:</label>
+                <textarea id="Profile" oninput="updateResume()" placeholder="Enter your experience"></textarea>
+            </div>
+           
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('email-section')">&#x2713;</span>
+                <label for="email">Email:</label>
+                <input type="email" id="email" oninput="updateResume()" placeholder="Enter your email">
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('phone-section')">&#x2713;</span>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" oninput="updateResume()" placeholder="Enter your phone number">
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('experience-section')">&#x2713;</span>
+                <label for="experience">Experience:</label>
+                <textarea id="experience" oninput="updateResume()" placeholder="Enter your experience"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('education-section')">&#x2713;</span>
+                <label for="education">Education:</label>
+                <textarea id="education" oninput="updateResume()" placeholder="Enter your education"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('skills-section')">&#x2713;</span>
+                <label for="skills">Skills:</label>
+                <textarea id="skills" oninput="updateResume()" placeholder="Enter your skills"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('projects-section')">&#x2713;</span>
+                <label for="projects">Projects:</label>
+                <textarea id="projects" oninput="updateResume()" placeholder="Enter your projects"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('achievements-section')">&#x2713;</span>
+                <label for="achievements">Achievements:</label>
+                <textarea id="achievements" oninput="updateResume()" placeholder="Enter your achievements"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('certifications-section')">&#x2713;</span>
+                <label for="certifications">Certifications:</label>
+                <textarea id="certifications" oninput="updateResume()" placeholder="Enter your certifications"></textarea>
+            </div>
+            <div>
+                <span class="toggle-btn" onclick="toggleSection('linkedin-section')">&#x2713;</span>
+                <label for="linkedin">LinkedIn Profile:</label>
+                <input type="url" id="linkedin" oninput="updateResume()" placeholder="Enter your LinkedIn profile URL">
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <button class="print-button" onclick="printResume()">Print Resume</button>
+            </div>
+        </div>
+        <div class="a4-container" id="resume">
+            <div class="top-section">
+                <div class="section">
+                    <div class="name" id="resume-name">John Doe</div>
+                    <div id="resume-phone">+1234567890</div>
+                    <div id="resume-email">john.doe@example.com</div>
+                <div id="resume-linkedin">https://www.linkedin.com/in/johndoe</div>     
+                </div>
+                
+                
+            </div>
+            <div class="column-container">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="heading" style="text-align: center; font-size: 20px;">Personal Information:</div>
+                    </div>
+                    <div class="section" id="profile-section">
+                        <div class="heading">Summary:</div>
+                        <div id="resume-Profile">Profile text...</div>
+                    </div>
+                    <div class="section" id="education-section">
+                        <div class="heading">Education:</div>
+                        <div id="resume-education">B.Sc. in Computer Science...</div>
+                    </div>
+                    <hr>
+                    <div class="section">
+                        <div class="heading" style="text-align: center; font-size: 20px;">Professional Information:</div>
+                    </div>
+                    <div class="section" id="experience-section">
+                        <div class="heading">Experience:</div>
+                        <div id="resume-experience">5 years of experience in web development...</div>
+                    </div>
+                    <div class="section" id="projects-section">
+                        <div class="heading">Projects:</div>
+                        <div id="resume-projects">Project details...</div>
+                    </div>
+                    <div class="section" id="skills-section">
+                        <div class="heading">Skills:</div>
+                        <div id="resume-skills">JavaScript, HTML, CSS...</div>
+                    </div>
+                    <div class="section" id="certifications-section">
+                        <div class="heading">Certifications:</div>
+                        <div id="resume-certifications">Certification details...</div>
+                    </div>
+                    <div class="section" id="achievements-section">
+                        <div class="heading">Achievements:</div>
+                        <div id="resume-achievements">Achievement details...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const fields = [
+                'name', 'Profile', 'email', 'phone', 'experience', 'education', 'skills', 'projects', 'achievements', 'certifications', 'linkedin'
+            ];
+
+            fields.forEach(field => {
+                const fieldKey = field === 'experience' ? 'workExperience' : field === 'achievements' ? 'Achievements' : field === 'certifications' ? 'Certifications' : field;
+                const fieldValue = localStorage.getItem(fieldKey);
+                if (fieldValue) {
+                    document.getElementById(field).value = fieldValue;
+                    document.getElementById(`resume-${field}`).innerText = fieldValue;
+                }
+            });
+        });
+
+        function updateResume() {
+            const fields = [
+                'name', 'Profile', 'email', 'phone', 'experience', 'education', 'skills', 'projects', 'achievements', 'certifications', 'linkedin'
+            ];
+
+            fields.forEach(field => {
+                const fieldKey = field === 'experience' ? 'workExperience' : field === 'achievements' ? 'Achievements' : field === 'certifications' ? 'Certifications' : field;
+                const fieldValue = document.getElementById(field).value || getDefaultValue(field);
+                document.getElementById(`resume-${field}`).innerText = fieldValue;
+                localStorage.setItem(fieldKey, fieldValue);
+            });
+        }
+
+        function getDefaultValue(field) {
+            const defaults = {
+                name: 'John Doe',
+                Profile: 'Profile data...',
+                email: 'john.doe@example.com',
+                phone: '+1234567890',
+                experience: '5 years of experience in web development...',
+                education: 'B.Sc. in Computer Science...',
+                skills: 'JavaScript, HTML, CSS...',
+                projects: 'Project details...',
+                achievements: 'Achievement details...',
+                certifications: 'Certification details...',
+                linkedin: 'https://www.linkedin.com/in/johndoe'
+            };
+            return defaults[field] || '';
+        }
+
+        function printResume() {
+            const element = document.getElementById('resume');
+            const opt = {
+                margin:       [0, 0, 0, 0],
+                filename:     'Resume.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save();
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
